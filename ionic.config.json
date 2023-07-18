@@ -1,0 +1,7 @@
+{
+  "name": "qr-tag-admin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
