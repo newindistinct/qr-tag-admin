@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>welcome</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="text-align: center;">
+    <h1>ยินดีตอนรับสู่ระบบ QR TAG</h1>
+  </div>
+  <div style="text-align: center;">
+    <h1>เลือกโรงพยาบาล</h1>
+  </div>
+  <div *ngFor="let site of hospital">
+    <div style="margin: 5%;height: 100px; background-color: aquamarine;text-align: center"
+    (click)="selectSite(site.site_id)">
+      <h3 style="align-items: center;">{{site.site_name}}</h3>
+    </div>
+  </div>
+  <ion-button (click)="onAuthStateChanged()" expand="block">onAuthStateChanged</ion-button>
+  <ion-button (click)="signout()" expand="block">signout</ion-button>
+</ion-content>

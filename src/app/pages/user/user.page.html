@@ -1,0 +1,14 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>User & Department</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="text-align: center;">
+    <h1>หน้าการจัดการผู้ใช้งาน</h1>
+  </div>
+  <ion-button (click)="onAuthStateChanged()" expand="block">onAuthStateChanged</ion-button>
+  <ion-button (click)="signout()" expand="block">signout</ion-button>
+  <div *ngIf="email" style="text-align: center;">{{email}}</div>
+</ion-content>

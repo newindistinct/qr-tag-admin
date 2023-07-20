@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, MenuController } from '@ionic/angular';
+import { RoutesService } from './services/routes.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -11,13 +12,22 @@ import { IonicModule } from '@ionic/angular';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    { title: 'User & Department', url: 'user', icon: 'settings' },
+    { title: 'Equipment', url: 'equipment', icon: 'pricetags' },
+    { title: 'Location', url: 'location', icon: 'business' },
+    // { title: 'Archived', url: '/folder/archived', icon: 'archive' },
+    // { title: 'Trash', url: '/folder/trash', icon: 'trash' },
+    // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  constructor( private menu: MenuController,
+    private routes: RoutesService,) {}
+  ngOnInit() {
+    console.log('AppComponent ngOnInit');
+    // this.menu.enable(false);
+    // this.menu.enable(true);
+  }
+  handlePageSelected(page: string) {
+    this.routes.routesMenu(page);
+  }
 }
