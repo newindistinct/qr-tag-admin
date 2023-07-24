@@ -34,7 +34,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage)
+    loadComponent: () => import('./pages/welcome/welcome.page').then(m => m.WelcomePage),
   },
   // {
   //   path: 'user',
@@ -50,7 +50,7 @@ export const routes: Routes = [
   //   loadComponent: () => import('./pages/location/location.page').then(m => m.LocationPage)
   // },
   {
-    path: 'welcome',
-    loadComponent: () => import('./pages/welcome/welcome.page').then(m => m.WelcomePage)
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage), 
   },
 ];

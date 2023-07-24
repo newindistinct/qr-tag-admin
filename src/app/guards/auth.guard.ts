@@ -13,12 +13,14 @@ export class AuthGuard {
   ) { }
   async canActivate() {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user?.isAnonymous == false) {
         const uid = user.uid;
-        console.log(user);
+        console.log(user.isAnonymous);
+        // this.router.navigateByUrl('');
       } else {
+        console.log(user?.isAnonymous);
         console.log('ยังไม่ได้ล็อกอิน');
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/login');
       }
     });
   }

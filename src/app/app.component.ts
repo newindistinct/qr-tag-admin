@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule, MenuController } from '@ionic/angular';
 import { RoutesService } from './services/routes.service';
+import { signInAnonymously } from 'firebase/auth';
+import { auth } from 'src/config';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -10,22 +12,24 @@ import { RoutesService } from './services/routes.service';
   standalone: true,
   imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
   public appPages = [
     { title: 'User & Department', url: 'user', icon: 'settings' },
     { title: 'Equipment', url: 'equipment', icon: 'pricetags' },
     { title: 'Location', url: 'location', icon: 'business' },
-    // { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    // { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    // { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
+  hospital: any[] = [];
+  _site_id = '';
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor( private menu: MenuController,
-    private routes: RoutesService,) {}
-  ngOnInit() {
+  constructor(private menu: MenuController,
+    private routes: RoutesService,
+    private router: Router) { }
+  async ngOnInit() {
     console.log('AppComponent ngOnInit');
-    // this.menu.enable(false);
-    // this.menu.enable(true);
+    this.hospital = await this.routes.getHotpital();  
+    this._site_id = await this.routes.getPresentHotpital();
+    console.log(this.hospital);
   }
   handlePageSelected(page: string) {
     this.routes.routesMenu(page);

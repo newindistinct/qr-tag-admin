@@ -5,10 +5,116 @@
 </ion-header>
 
 <ion-content>
-  <div style="text-align: center;">
+  <!-- <div style="text-align: center;">
     <h1>หน้าการจัดการผู้ใช้งาน</h1>
-  </div>
-  <ion-button (click)="onAuthStateChanged()" expand="block">onAuthStateChanged</ion-button>
+  </div> -->
+  <!-- <ion-button (click)="onAuthStateChanged()" expand="block">onAuthStateChanged</ion-button>
   <ion-button (click)="signout()" expand="block">signout</ion-button>
-  <div *ngIf="email" style="text-align: center;">{{email}}</div>
+  <div *ngIf="email" style="text-align: center;">{{email}}</div> -->
+  <ion-segment [(ngModel)]="selectedTab">
+    <ion-segment-button value="user" (click)="tabUser()">
+      <ion-label>User</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="department" (click)="tabDepartment()">
+      <ion-label>Department</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="selectedTab == 'user'">
+    <div style="padding: 3%;">
+      <div>
+        <div style="justify-content:left;display: flex;flex-direction: row;align-items: center;margin-bottom: 3%;">
+          <ion-input type="text" style="border: 1px solid #478dc3;border-radius: 8px;width: 50%;margin-right: 5px;"
+            placeholder="Type to filter the name column..."></ion-input>
+          <ion-button (click)="addData()" id="open-modal">AddData</ion-button>
+        </div>
+
+        <ngx-datatable *ngIf="loadDatatable" class="material" [limit]="10" [rowHeight]="65" [headerHeight]="70"
+          [footerHeight]="60" [rows]="data" [columns]="columns" [columnMode]="'force'" [scrollbarH]="true"
+          [selected]="selected" [selectionType]="SelectionType.single" (activate)="onActivate($event)"
+          (select)="onSelect($event)">
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectedTab == 'department'">
+    <div style="padding: 3%;">
+      <div>
+        <div
+          style="justify-content: space-between;display: flex;flex-direction: row;align-items: center;margin-bottom: 3%;">
+          <ion-input type="text" style="border: 1px solid #478dc3;border-radius: 8px;"
+            placeholder="Type to filter the name column..."></ion-input>
+          <ion-button (click)="addData()">AddData</ion-button>
+        </div>
+
+        <ngx-datatable *ngIf="loadDatatable" class="material" [limit]="10" [rowHeight]="65" [headerHeight]="70"
+          [footerHeight]="60" [rows]="data" [columns]="columns" [columnMode]="'force'">
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
 </ion-content>
+<ion-modal trigger="open-modal">
+  <ng-template>
+    <ion-content>
+      <div style="text-align: center;align-items: center;padding: 5%;">
+        <form #loginForm="ngForm" novalidate>
+          <!-- <ion-input label="id" labelPlacement="stacked" fill="solid" [(ngModel)]="user.id" name="id" type="text"
+            #username="ngModel" spellcheck="false" autocapitalize="off" errorText="id is required" required>
+          </ion-input> -->
+          <ion-input label="name" labelPlacement="stacked" fill="solid" [(ngModel)]="user.name" name="name" type="text"
+            #username="ngModel" spellcheck="false" autocapitalize="off" errorText="name is required" required>
+          </ion-input>
+          <ion-input label="lastName" labelPlacement="stacked" fill="solid" [(ngModel)]="user.lastName" name="lastName"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="lastName is required"
+            required>
+          </ion-input>
+          <ion-input label="phone" labelPlacement="stacked" fill="solid" [(ngModel)]="user.phone" name="phone"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="phone is required"
+            required>
+          </ion-input>
+          <ion-input label="remark" labelPlacement="stacked" fill="solid" [(ngModel)]="user.remark" name="remark"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="remark is required"
+            required>
+          </ion-input>
+
+          <div class="ion-padding">
+            <ion-button (click)="addDataToFirebase(loginForm)" type="submit" expand="block"
+              id="open-modal">Add</ion-button>
+          </div>
+        </form>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-content>
+      <div style="text-align: center;align-items: center;padding: 5%;">
+        <form #loginForm="ngForm" novalidate>
+          <!-- <ion-input label="id" labelPlacement="stacked" fill="solid" [(ngModel)]="user.id" name="id" type="text"
+            #username="ngModel" spellcheck="false" autocapitalize="off" errorText="id is required" required>
+          </ion-input> -->
+          <ion-input label="name" labelPlacement="stacked" fill="solid" [(ngModel)]="selected[0].user_name" name="name" type="text"
+            #username="ngModel" spellcheck="false" autocapitalize="off" errorText="name is required" required>
+          </ion-input>
+          <ion-input label="lastName" labelPlacement="stacked" fill="solid" [(ngModel)]="selected[0].user_lastName" name="lastName"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="lastName is required"
+            required>
+          </ion-input>
+          <ion-input label="phone" labelPlacement="stacked" fill="solid" [(ngModel)]="selected[0].user_phone" name="phone"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="phone is required"
+            required>
+          </ion-input>
+          <ion-input label="remark" labelPlacement="stacked" fill="solid" [(ngModel)]="selected[0].user_remark" name="remark"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="remark is required"
+            required>
+          </ion-input>
+
+          <div class="ion-padding">
+            <ion-button (click)="updateDataToFirebase(loginForm)" type="submit" expand="block">Add</ion-button>
+          </div>
+        </form>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

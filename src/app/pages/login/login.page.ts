@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule, MenuController } from '@ionic/angular';
-import { sendSignInLinkToEmail } from 'firebase/auth';
+import { onAuthStateChanged, sendSignInLinkToEmail, signInAnonymously } from 'firebase/auth';
 import { auth, db } from 'src/config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,25 @@ export class LoginPage implements OnInit {
   site: any[] = [];
   isModalOpen = false;
 
-  constructor(private menu: MenuController,) { }
+  constructor(private menu: MenuController, private router: Router) { }
 
   async ngOnInit() {
     this.menu.enable(false);
+    onAuthStateChanged(auth, (user) => {
+      if (user?.isAnonymous == false) {
+        const uid = user.uid;
+        console.log(user.isAnonymous);
+        this.router.navigateByUrl('');
+      } else {
+        signInAnonymously(auth).then(() => {
+          console.log('Sign-in Anonymous.');
+          }).catch((error) => {
+            // this.router.navigateByUrl('');
+          console.log(error.code, error.message);
+        });
+      }
+    });
+
   }
   async checkAdmin(form: NgForm) {
     console.log('checkAdmin');
@@ -44,17 +60,17 @@ export class LoginPage implements OnInit {
       });
       this.sendSignInLinkToEmail(form.value.email);
     }).catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
+      console.log("Error getting documents: ", error);
+    });
   }
 
-  async sendSignInLinkToEmail(email:string) {
+  async sendSignInLinkToEmail(email: string) {
     const actionCodeSettings = {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be in the authorized domains list in the Firebase Console.
       // url: 'https://meowsurvey-74418.web.app',
-      url: 'https://testdb-36ded.web.app/welcome',
-      // url: 'http://localhost:8100',
+      // url: 'https://testdb-36ded.web.app/welcome',
+      url: 'http://localhost:8100',
       // This must be true.
       handleCodeInApp: true,
     };
@@ -70,10 +86,10 @@ export class LoginPage implements OnInit {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        this.errorMassage = errorCode+errorMessage;
+        this.errorMassage = errorCode + errorMessage;
         console.log(errorCode, errorMessage);
         // ...
       });
   }
-  
+
 }

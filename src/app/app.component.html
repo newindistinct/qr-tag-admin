@@ -4,6 +4,10 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Indistinct</ion-list-header>
+          <ion-select name="hotpital" interface="popover" style="padding-left: 3%;" value="">
+            <ion-select-option *ngFor="let item of hospital"
+              [value]="item.site_id">{{item.site_name}}</ion-select-option>
+          </ion-select>
           <ion-note>hi@ionicframework.com</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
