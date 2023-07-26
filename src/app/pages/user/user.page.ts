@@ -55,7 +55,7 @@ export class UserPage implements OnInit {
     phone: '',
     remark: '',
     IsEnabled: true,
-    IsDeleted: true,
+    IsDeleted: false,
     create_date: new Date()
   };
 
@@ -80,9 +80,8 @@ export class UserPage implements OnInit {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
-      // this.timestamp = doc.data()['user_create_date'];
       this.data.push(doc.data());
-
+      // this.timestamp = doc.data()['user_create_date'];
       // const date = new Date(this.timestamp.seconds * 1000);
       // const options: Intl.DateTimeFormatOptions = {
       //   year: 'numeric',
@@ -94,9 +93,7 @@ export class UserPage implements OnInit {
       //   timeZoneName: 'short'
       // };
       // const formattedDate = date.toLocaleDateString('th-TH', options);
-
       // console.log(formattedDate);
-
     });
     this.total = this.data.length;
     this.loadDatatable = true;

@@ -39,6 +39,7 @@ export class WelcomePage implements OnInit {
         })
         .catch((error) => {
           console.log(error);
+          this.router.navigateByUrl('/login');
         });
     }
   }
@@ -55,7 +56,7 @@ export class WelcomePage implements OnInit {
   async signout() {
     await signOut(auth).then(() => {
       console.log('Sign-out successful.');
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/login');
     }).catch((error) => {
       console.log(error);
     });

@@ -9,24 +9,24 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCJYeJOST8IbReGJIHF5z1JdAXzCvcvxTk",
-  authDomain: "qr-track-ac8ec.firebaseapp.com",
-  projectId: "qr-track-ac8ec",
-  storageBucket: "qr-track-ac8ec.appspot.com",
-  messagingSenderId: "647098870907",
-  appId: "1:647098870907:web:58a5de6ae6114c768346de",
-  measurementId: "G-8HP1PDQB09"
-};
 // const firebaseConfig = {
-//   apiKey: "AIzaSyDGd4VDkfmNupoF4sBIkxBKDzMuMYobrw4",
-//   authDomain: "meowsurvey-74418.firebaseapp.com",
-//   projectId: "meowsurvey-74418",
-//   storageBucket: "meowsurvey-74418.appspot.com",
-//   messagingSenderId: "258332422451",
-//   appId: "1:258332422451:web:b2cda4d21dbd0ea9be0e46",
-//   measurementId: "G-4WLD8PDHE6"
+//   apiKey: "AIzaSyCJYeJOST8IbReGJIHF5z1JdAXzCvcvxTk",
+//   authDomain: "qr-track-ac8ec.firebaseapp.com",
+//   projectId: "qr-track-ac8ec",
+//   storageBucket: "qr-track-ac8ec.appspot.com",
+//   messagingSenderId: "647098870907",
+//   appId: "1:647098870907:web:58a5de6ae6114c768346de",
+//   measurementId: "G-8HP1PDQB09"
 // };
+const firebaseConfig = {
+  apiKey: "AIzaSyDGd4VDkfmNupoF4sBIkxBKDzMuMYobrw4",
+  authDomain: "meowsurvey-74418.firebaseapp.com",
+  projectId: "meowsurvey-74418",
+  storageBucket: "meowsurvey-74418.appspot.com",
+  messagingSenderId: "258332422451",
+  appId: "1:258332422451:web:b2cda4d21dbd0ea9be0e46",
+  measurementId: "G-4WLD8PDHE6"
+};
 // const firebaseConfig = {
 //   apiKey: "AIzaSyBE8hlH15xV2ucuSXEvJI8PwrMhTDI9RjA",
 //   authDomain: "testdb-36ded.firebaseapp.com",

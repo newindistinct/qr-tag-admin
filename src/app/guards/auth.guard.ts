@@ -12,7 +12,9 @@ export class AuthGuard {
     private readonly router: Router
   ) { }
   async canActivate() {
+    console.log("canActivate");
     onAuthStateChanged(auth, (user) => {
+      console.log("onAuthStateChanged",user);
       if (user?.isAnonymous == false) {
         const uid = user.uid;
         console.log(user.isAnonymous);
@@ -22,7 +24,7 @@ export class AuthGuard {
         console.log('ยังไม่ได้ล็อกอิน');
         this.router.navigateByUrl('/login');
       }
-    });
+    });// ทำงานหลายครั้ง
   }
 
 }
