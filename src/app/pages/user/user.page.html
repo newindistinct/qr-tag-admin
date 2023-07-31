@@ -12,10 +12,10 @@
   <ion-button (click)="signout()" expand="block">signout</ion-button>
   <div *ngIf="email" style="text-align: center;">{{email}}</div> -->
   <ion-segment [(ngModel)]="selectedTab">
-    <ion-segment-button value="user" (click)="tabUser()">
+    <ion-segment-button value="user" >
       <ion-label>User</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="department" (click)="tabDepartment()">
+    <ion-segment-button value="department" >
       <ion-label>Department</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -23,13 +23,13 @@
     <div style="padding: 3%;">
       <div>
         <div style="justify-content:left;display: flex;flex-direction: row;align-items: center;margin-bottom: 3%;">
-          <ion-input type="text" style="border: 1px solid #478dc3;border-radius: 8px;width: 50%;margin-right: 5px;"
-            placeholder="Type to filter the name column..."></ion-input>
-          <ion-button (click)="addData()" id="open-modal">AddData</ion-button>
+          <input type="text" style="background-color: #fff; border: 1px solid #478dc3;border-radius: 8px;width: 50%;margin-right: 5px;height: 40px;padding-left: 15px;"
+            placeholder="Type to filter the Name column..." #inputEl (input)="inputSearch(inputEl.value) " pInputText/>
+          <ion-button id="open-modal">AddData</ion-button>
         </div>
 
         <ngx-datatable *ngIf="loadDatatable" class="material" [limit]="10" [rowHeight]="65" [headerHeight]="70"
-          [footerHeight]="60" [rows]="data" [columns]="columns" [columnMode]="'force'" [scrollbarH]="true"
+          [footerHeight]="60" [rows]="filteredUser" [columns]="columns" [columnMode]="'force'" [scrollbarH]="true"
           [selected]="selected" [selectionType]="SelectionType.single" (activate)="onActivate($event)"
           (select)="onSelect($event)">
         </ngx-datatable>
@@ -43,7 +43,7 @@
           style="justify-content: space-between;display: flex;flex-direction: row;align-items: center;margin-bottom: 3%;">
           <ion-input type="text" style="border: 1px solid #478dc3;border-radius: 8px;"
             placeholder="Type to filter the name column..."></ion-input>
-          <ion-button (click)="addData()">AddData</ion-button>
+          <ion-button>AddData</ion-button>
         </div>
 
         <ngx-datatable *ngIf="loadDatatable" class="material" [limit]="10" [rowHeight]="65" [headerHeight]="70"
@@ -73,6 +73,10 @@
             required>
           </ion-input>
           <ion-input label="remark" labelPlacement="stacked" fill="solid" [(ngModel)]="user.remark" name="remark"
+            type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="remark is required"
+            required>
+          </ion-input>
+          <ion-input label="site" labelPlacement="stacked" fill="solid" [(ngModel)]="user.site" name="site"
             type="text" #username="ngModel" spellcheck="false" autocapitalize="off" errorText="remark is required"
             required>
           </ion-input>
@@ -111,7 +115,8 @@
           </ion-input>
 
           <div class="ion-padding">
-            <ion-button (click)="updateDataToFirebase(loginForm)" type="submit" expand="block">Add</ion-button>
+            <ion-button (click)="updateDataToFirebase(loginForm)" type="submit" expand="block">Update</ion-button>
+            <ion-button (click)="deleteDataFromFirebase(loginForm)" type="submit" expand="block">Delete</ion-button>
           </div>
         </form>
       </div>

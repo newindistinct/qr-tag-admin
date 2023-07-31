@@ -39,9 +39,9 @@ export class LocationPage implements OnInit {
     console.log(this.title);
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
+      this.data.push(doc.data());
       console.log(doc.id, " => ", doc.data());
       this.timestamp = doc.data()['user_create_date'];
-      this.data.push(doc.data());
       const date = new Date(this.timestamp.seconds * 1000);
       const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
@@ -53,8 +53,9 @@ export class LocationPage implements OnInit {
         timeZoneName: 'short'
       };
       const formattedDate = date.toLocaleDateString('th-TH', options);
-
+      const datetime = formattedDate.split(' ');
       console.log(formattedDate);
+      console.log(datetime);
 
     });
 

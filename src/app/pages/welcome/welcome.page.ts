@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { isSignInWithEmailLink, onAuthStateChanged, signInAnonymously, signInWithEmailLink, signOut } from 'firebase/auth';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -5,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController } from '@ionic/angular';
 import { auth } from 'src/config';
 import { Router } from '@angular/router';
-import { RoutesService } from 'src/app/services/routes.service';
 
 @Component({
   selector: 'app-welcome',
@@ -15,53 +15,35 @@ import { RoutesService } from 'src/app/services/routes.service';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class WelcomePage implements OnInit {
-  hospital: any[] = [];
-  // constructor() { }
+  // hospital: any[] = [];
+  // // constructor() { }
   constructor(
     private router: Router,
     private menu: MenuController,
-    private routes: RoutesService) { }
+    private authService:AuthService) { }
   async ngOnInit() {
-    this.menu.enable(false);
-    this.hospital = await this.routes.getHotpital();  
-    console.log(this.hospital);
-    console.log(window.location.href);
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      let email = window.localStorage.getItem('emailForSignIn');
-      console.log(email);
-      if (!email) {
-        email = window.prompt('Please provide your email for confirmation');
-      }
-      console.log(email);
-      signInWithEmailLink(auth, email!, window.location.href)
-        .then((result) => {
-          window.localStorage.removeItem('emailForSignIn');
-        })
-        .catch((error) => {
-          console.log(error);
-          this.router.navigateByUrl('/login');
-        });
-    }
+    // this.routes.setRouteSiteID(this.routes._site_id);
   }
-  onAuthStateChanged() {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log(user);
-      } else {
-        console.log('no user');
-      }
-    });
-  }
-  async signout() {
-    await signOut(auth).then(() => {
-      console.log('Sign-out successful.');
-      this.router.navigateByUrl('/login');
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-  selectSite(site_id: string) {
-    this.routes.setRouteSiteID(site_id);
-  }
+  //   // this.menu.enable(false);
+  //   // this.authService.receivedSignInLink();
+  //   // this.hospital = await this.routes.getHotpital();  
+  //   console.log(this.hospital);
+  //   console.log(window.location.href);
+    
+  // }
+  // onAuthStateChanged() {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       console.log(user);
+  //     } else {
+  //       console.log('no user');
+  //     }
+  //   });
+  // }
+  // async signout() {
+  //   this.authService.signout();
+  // }
+  // selectSite(site_id: string) {
+  //   this.routes.setRouteSiteID(site_id);
+  // }
 }

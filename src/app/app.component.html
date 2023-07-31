@@ -4,11 +4,12 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Indistinct</ion-list-header>
-          <ion-select name="hotpital" interface="popover" style="padding-left: 3%;" value="">
-            <ion-select-option *ngFor="let item of hospital"
+          <ion-select name="hotpital" interface="popover" style="padding-left: 3%;" [value]="siteId" (ionChange)="selectSite($event)">
+            <ion-select-option [value]="siteId">โรงพยายาลทั้งหมด</ion-select-option>
+            <ion-select-option *ngFor="let item of site"
               [value]="item.site_id">{{item.site_name}}</ion-select-option>
           </ion-select>
-          <ion-note>hi@ionicframework.com</ion-note>
+          <ion-note>{{emailAdmin}}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item lines="none" detail="false" (click)="handlePageSelected(p.url)">
@@ -16,6 +17,13 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <!-- <ion-item lines="none" detail="false" (click)="test()">
+            <ion-label>test</ion-label>
+          </ion-item> -->
+          <ion-item lines="none" detail="false" (click)="signout()">
+            <ion-icon aria-hidden="true" slot="start" ios="settings-outline" md="settings-sharp"></ion-icon>
+            <ion-label>signout</ion-label>
+          </ion-item>
         </ion-list>
 
         <!-- <ion-list id="labels-list">
